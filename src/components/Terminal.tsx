@@ -1,5 +1,5 @@
 import {RiArrowRightSLine} from "react-icons/ri";
-import {commands, historyCommands, results} from "../atom/common.ts";
+import {commandResult, commands, historyCommands, results} from "../atom/common.ts";
 import {useAtom} from 'jotai'
 import {useEffect, useRef, useState} from "react";
 import {Result} from "../models/Result.ts";
@@ -61,6 +61,12 @@ export default function Terminal() {
             case "sudo":
                 setResult("Sorry try again")
                 break
+            case "farish":
+                setResult("Ayo main metaphor refantazio")
+                break
+            case "/about":
+                setResult(commandResult.about)
+                break
             default:
                 setResult("Error: command not found")
         }
@@ -82,10 +88,17 @@ export default function Terminal() {
                         {historyCommand.map((command, index) => (
                             <div key={index}>
                                 <label className="relative">
-                                    <RiArrowRightSLine className="w-5 h-5 text-red-400 absolute bottom-0.5"/>
+                                    <RiArrowRightSLine className="w-5 h-5 text-red-400 absolute top-1"/>
                                     <h1 className="px-6">{command.commands}</h1>
                                 </label>
-                                <p className="text-text-primary px-2">{command.hasil}</p>
+                                <motion.span
+                                    initial={{opacity: 0}}
+                                    animate={{opacity: 1}}
+                                    transition={{
+                                        duration: 0.25,
+                                        delay: index / 10
+                                    }}
+                                    className="text-text-primary px-5">{command.hasil}</motion.span>
                                 <div ref={dummy}></div>
                             </div>
                         ))}
